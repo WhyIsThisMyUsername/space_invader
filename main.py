@@ -9,8 +9,16 @@ screen = pygame.display.set_mode((640, 480))
 
 bg = pygame.image.load('images/background.jpg')
 
+class Player():
+    def __init__(self):
+
+
+class Enemy():
+    pass
+
 game_running = True
 while game_running:
     clock.tick(60)
     screen.blit(bg, (0, 0))
     pygame.display.update()
+
