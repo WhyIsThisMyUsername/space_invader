@@ -1,6 +1,7 @@
 import pygame
 
 pygame.init()
+
 screen = pygame.display.set_mode((500, 600))
 clock = pygame.time.Clock()
 font = pygame.font.SysFont("Arial", 20)
