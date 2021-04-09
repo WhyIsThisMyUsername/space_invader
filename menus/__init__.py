@@ -12,7 +12,11 @@ class Menus:
         self.to_blit = []
         self.to_blit.append(Button('Start', 320, 100, (15, 15, 15), 'white'))
         self.to_blit.append(Button('Controls', 320, 200, (15, 15, 15), 'white'))
-    
+
+    def controls_menu(self):
+        self.to_blit = []
+        self.to_blit.append(Button('Return', 580, 430, (15, 15, 15), 'white'))
+
     def start_game(self):
         pass
     
