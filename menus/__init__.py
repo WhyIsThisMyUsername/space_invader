@@ -19,14 +19,20 @@ class Menus:
         self.to_blit_resizing_text = []
         self.to_blit_buttons.append(Button('Start', (320, 100), (15, 15, 15), 'white', large_button_font))
         self.to_blit_buttons.append(Button('Controls', (320, 200), (15, 15, 15), 'white', large_button_font))
+        self.to_blit_buttons.append(Button('Bouncy', (320, 300), (15, 15, 15), 'white', large_button_font))
     
     def controls_menu(self):
         self.to_blit_buttons = []
         self.to_blit_resizing_text = []
-        controls_text = 'fuck AHHHHH THIS IS TEXT WHY AM I TYPING THIS LOL HELP ME GOD IS DEAD\nTHIS IS A NEW FUCKIN LINE BITCHESSSS'
+        controls_text = 'insert\ncontrols\nhere'
         self.to_blit_buttons.append(Button('Return', (580, 430), (15, 15, 15), 'white', medium_button_font))
         self.to_blit_resizing_text.append(
             ResizingText(self.screen, controls_text, (50, 50), (620, 540), 'white', (15, 15, 15), medium_button_font))
+
+    def bouncing_button_demo(self):
+        self.to_blit_buttons = []
+        self.to_blit_resizing_text = []
+        self.to_blit_buttons.append(Button('BOUNCE', (320, 450), (15, 15, 15), 'white', medium_button_font))
     
     def start_game(self):
         self.to_blit_buttons = []
