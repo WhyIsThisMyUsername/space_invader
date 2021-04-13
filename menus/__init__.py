@@ -32,7 +32,7 @@ class Menus:
     def bouncing_button_demo(self):
         self.to_blit_buttons = []
         self.to_blit_resizing_text = []
-        self.to_blit_buttons.append(Button('BOUNCE', (320, 450), (15, 15, 15), 'white', medium_button_font))
+        self.to_blit_buttons.append(Button('BOUNCE', (320, 400), (15, 15, 15), 'white', medium_button_font))
     
     def start_game(self):
         self.to_blit_buttons = []
