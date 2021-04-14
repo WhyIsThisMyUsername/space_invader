@@ -66,7 +66,7 @@ while game_running:
                 print(menu_control.to_blit_buttons[0].middle_top_y)
         elif direction[0] == 'down':
             menu_control.to_blit_buttons[0].middle_top_y += direction[1]
-            # menu_control.to_blit_buttons[0].set_text('BOUNCE', (15, 15, 15), 'white', menu_components.medium_button_font)
+
             direction[1] += 1
             if direction[1] == 21:
                 direction[0] = 'up'
