@@ -24,7 +24,7 @@ class Button:
                                 self.middle_top_y,
                                 self.text_size[0],
                                 self.text_size[1])
-
+        
 
 class ResizingText:
     def __init__(self, surface, text, pos, max_pos, text_color, bg_color, font):

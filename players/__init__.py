@@ -10,3 +10,5 @@ class Player:
         self.active_powers = []
         
         self.sprite = pygame.image.load('images/player.png')
+        self.sprite = pygame.transform.scale(self.sprite, (40, 40))
+        
