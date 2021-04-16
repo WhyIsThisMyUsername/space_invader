@@ -1,6 +1,7 @@
 import pygame
 from menu_components import Button
 from menu_components import ResizingText
+from players import Player
 
 pygame.init()
 
@@ -13,6 +14,10 @@ class Menus:
         self.screen = screen
         self.to_blit_buttons = []
         self.to_blit_resizing_text = []
+        self.to_blit_enemies = []
+        self.to_blit_buttons = []
+        self.to_blit_resizing_text = []
+        self.to_blit_players = []
     
     def main_menu(self):
         self.to_blit_buttons = []
