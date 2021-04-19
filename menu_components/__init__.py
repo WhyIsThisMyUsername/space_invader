@@ -10,6 +10,8 @@ bg = pygame.image.load('images/background.jpg')
 class Button:
     def __init__(self, text, pos, bg_color, text_color, font):
         self.middle_x, self.middle_top_y = pos
+        self.text_size = font.render(text, True, pygame.Color(text_color)).get_size()
+        self.middle_x = self.middle_x - self.text_size[0] / 2
         self.set_text(text, bg_color, text_color, font)
     
     def set_text(self, text, button_bg, text_color, font):
@@ -19,7 +21,6 @@ class Button:
         self.surface.fill(button_bg)
         self.surface.blit(self.text, (0, 0))
         # self.surface.set_alpha(100)
-        self.middle_x = self.middle_x - self.text_size[0] / 2
         self.rect = pygame.Rect(self.middle_x,
                                 self.middle_top_y,
                                 self.text_size[0],

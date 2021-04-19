@@ -2,7 +2,7 @@ import pygame
 
 
 class Player:
-    def __init__(self):
+    def __init__(self, x, y):
         self.lives = 3
         self.health = 100
         self.firing_speed = 1
@@ -11,3 +11,7 @@ class Player:
         
         self.sprite = pygame.image.load('images/player.png')
         self.sprite = pygame.transform.scale(self.sprite, (50, 50))
+        
+        self.x = x
+        self.y = y
+        

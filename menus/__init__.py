@@ -14,10 +14,6 @@ class Menus:
         self.screen = screen
         self.to_blit_buttons = []
         self.to_blit_resizing_text = []
-        self.to_blit_enemies = []
-        self.to_blit_buttons = []
-        self.to_blit_resizing_text = []
-        self.to_blit_players = []
     
     def main_menu(self):
         self.to_blit_buttons = []
@@ -42,23 +38,10 @@ class Menus:
     def start_game(self):
         self.to_blit_buttons = []
         self.to_blit_resizing_text = []
-    
-    def load_level_one(self):
-        self.to_blit_enemies = []
-        self.to_blit_buttons = []
-        self.to_blit_resizing_text = []
-        self.to_blit_players = []
         
-    def blit_menu(self, levels=False):
+    def blit_menu(self):
         for i in self.to_blit_resizing_text:
             self.screen.blit(i.new_surface, (0, 0))
         
         for i in self.to_blit_buttons:
             self.screen.blit(i.surface, (i.middle_x, i.middle_top_y))
-        
-        if levels:
-            for i in self.to_blit_enemies:
-                self.screen.blit(i.surface, (i.middle_x, i.middle_top_y))
-            
-            for i in self.to_blit_players:
-                self.screen.blit(i.surface, (i.middle_x, i.middle_top_y))
