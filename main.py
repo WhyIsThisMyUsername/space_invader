@@ -22,24 +22,24 @@ level_control = LevelController(screen, 1280, 960)
 menu_control.main_menu()
 status = 'Main Menu'
 direction = ['up', 20]
-left_held, right_held = False, False
+left_held, right_held, fire_held = False, False, False
 fire_speed = 60
 
 while game_running:
     old_status = status
     clock.tick(60)
     screen.blit(bg, (0, 0))
-
+    
     if status.startswith('Level'):
         level_control.blit_screen()
     else:
         menu_control.blit_menu()
-
+    
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             game_running = False
-    
-    # Include additional IF statement to check if status != levels?
+        
+        # Include additional IF statement to check if status != levels?
         if event.type == pygame.MOUSEBUTTONDOWN:
             if pygame.mouse.get_pressed()[0]:
                 if status == 'Main Menu':
@@ -65,7 +65,7 @@ while game_running:
                         status = 'Main Menu'
                         direction = ['up', 20]
                         menu_control.main_menu()
-
+        
         if status.startswith('Level'):
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
@@ -73,26 +73,30 @@ while game_running:
                 if event.key == pygame.K_RIGHT:
                     right_held = True
                 if event.key == pygame.K_SPACE:
-                    if fire_speed == 60:
-                        level_control.fire_bullet()
+                    fire_held = True
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT:
                     left_held = False
                 if event.key == pygame.K_RIGHT:
                     right_held = False
-            
-            
+                if event.key == pygame.K_SPACE:
+                    fire_held = False
+    
     if status.startswith('Level'):
         if left_held and not level_control.player.x < 70:
             level_control.player.x -= 10
-    
+        
         if right_held and not level_control.player.x > 1210:
             level_control.player.x += 10
         
-        if fire_speed < 60:
+        if fire_speed < 100:
             fire_speed += 1
         
-
+        if fire_held:
+            if fire_speed >= 30:
+                level_control.fire_bullet()
+                fire_speed = 0
+    
     if status == 'Bouncing Button':
         if direction[0] == 'up' and direction[1] == 21:
             direction[1] = 20
@@ -111,8 +115,7 @@ while game_running:
                 direction[0] = 'up'
                 print(menu_control.to_blit_buttons[0].middle_top_y)
     
-
     if status != old_status:
         print(f'New Status: "{old_status}" --> "{status}"')
-
+    
     pygame.display.update()
