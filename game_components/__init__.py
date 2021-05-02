@@ -2,8 +2,10 @@ import pygame
 
 pygame.init()
 
+
 class Bullet:
     bullet_speed = 1
+
     def __init__(self, x, y, color):
         self.rect = pygame.Rect(x, y, 5, 10)
         self.x = x

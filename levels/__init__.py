@@ -51,6 +51,10 @@ class LevelController:
         self.enemy_bullets.append(Bullet(x, y, 'red'))
     
     def blit_screen(self):
+        for i in self.enemy_bullets:
+            if pygame.sprite.collide_rect(i, self.player):
+                print('COLLIDE')
+
         enemy_count = 0
         for x in self.to_blit_enemy_lists:
             for y in x:
@@ -94,13 +98,11 @@ class LevelController:
                 i.bullet_progress = 0
             if i.y > 960:
                 self.enemy_bullets.remove(i)
+
+
         
         print(self.lives)
-        
-        for i in self.enemy_bullets:
-            if pygame.sprite.collide_rect(i, self.player):
-                self.lives -= 1
-                self.enemy_bullets.remove(i)
+
     
         self.to_remove = []
         for i in self.player_bullets:
@@ -133,10 +135,15 @@ class LevelController:
         
         self.to_remove = []
         for i in range(len(self.to_blit_enemy_lists)):
-            if self.to_blit_enemy_lists[i] == []:
+            if not self.to_blit_enemy_lists[i]:
                 self.to_remove.append(i)
         for i in self.to_remove:
             del self.to_blit_enemy_lists[i]
+
+        for i in self.enemy_bullets:
+            if pygame.sprite.collide_rect(i, self.player):
+                self.lives -= 1
+                self.enemy_bullets.remove(i)
         
         if self.to_blit_enemy_lists != []:
             left_row = self.to_blit_enemy_lists[0][0].x

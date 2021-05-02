@@ -12,8 +12,7 @@ class Player:
         self.sprite = pygame.image.load('images/player.png')
         self.sprite = pygame.transform.scale(self.sprite, (70, 70))
 
-        self.rect = pygame.Rect(x, y, 5, 10)
+        self.rect = pygame.Rect(x, y, 70, 70)
         
         self.x = x
         self.y = y
-        
