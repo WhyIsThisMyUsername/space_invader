@@ -94,7 +94,7 @@ while game_running:
         
         if fire_held:
             if fire_speed >= 30:
-                level_control.fire_bullet()
+                level_control.player_fire_bullet()
                 fire_speed = 0
     
     if status == 'Bouncing Button':

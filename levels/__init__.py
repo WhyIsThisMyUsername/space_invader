@@ -8,7 +8,8 @@ pygame.init()
 
 class LevelController:
     def __init__(self, screen, display_x, display_y):
-        self.bullets = []
+        self.player_bullets = []
+        self.enemy_bullets = []
         self.animation_progress = 0
         self.animation_speed = 30
         self.animation_type = 0
@@ -31,6 +32,7 @@ class LevelController:
         self.animation_speed = 20
         self.animation_progress = 0
         self.animation_type = 0
+        self.lives = 3
         self.to_blit_enemy_lists = []
         self.to_blit_bullets = []
         working_size = (240, self.display_x - 240 - 100)
@@ -42,43 +44,73 @@ class LevelController:
             self.to_blit_enemy_lists[-1].append(Enemy(self.enemy_3, current_x, 250))
             current_x += 100
     
-    def fire_bullet(self):
-        self.bullets.append(Bullet(self.player.x + 15, self.player.y - 10))
+    def player_fire_bullet(self):
+        self.player_bullets.append(Bullet(self.player.x + 15, self.player.y - 10, 'white'))
+    
+    def enemy_fire_bullet(self, x, y):
+        self.enemy_bullets.append(Bullet(x, y, 'red'))
     
     def blit_screen(self):
         enemy_count = 0
         for x in self.to_blit_enemy_lists:
             for y in x:
                 enemy_count += 1
-        print(enemy_count)
         if 20 <= enemy_count < 24:
             self.animation_speed = 18
+            Enemy.bullet_chance = 18
         elif 15 <= enemy_count < 20:
             self.animation_speed = 15
+            Enemy.bullet_chance = 15
         elif 10 <= enemy_count < 15:
             self.animation_speed = 11
+            Enemy.bullet_chance = 11
         elif 5 <= enemy_count < 10:
             self.animation_speed = 5
+            Enemy.bullet_chance = 5
         elif 0 <= enemy_count < 5:
             self.animation_speed = 2
-        for i in self.bullets:
+            Enemy.bullet_chance = 2
+
+        for i in self.player_bullets:
             i.bullet_progress += 1
             if i.bullet_progress >= i.bullet_speed:
                 i.y -= 5
                 i.rect = i.rect.move(0, -5)
                 i.bullet_progress = 0
             if i.y < 0:
-                self.bullets.remove(i)
-                
+                self.player_bullets.remove(i)
+        
+        for x in range(len(self.to_blit_enemy_lists)):
+            for y in range(len(self.to_blit_enemy_lists[x])):
+                if self.to_blit_enemy_lists[x][y].fire_bullet_check():
+                    print(True)
+                    self.enemy_fire_bullet(self.to_blit_enemy_lists[x][y].x, self.to_blit_enemy_lists[x][y].y)
+        
+        for i in self.enemy_bullets:
+            i.bullet_progress += 1
+            if i.bullet_progress >= i.bullet_speed:
+                i.y += 5
+                i.rect = i.rect.move(0, +5)
+                i.bullet_progress = 0
+            if i.y > 960:
+                self.enemy_bullets.remove(i)
+        
+        print(self.lives)
+        
+        for i in self.enemy_bullets:
+            if pygame.sprite.collide_rect(i, self.player):
+                self.lives -= 1
+                self.enemy_bullets.remove(i)
+    
         self.to_remove = []
-        for i in self.bullets:
+        for i in self.player_bullets:
             for x in range(len(self.to_blit_enemy_lists)):
                 for y in range(len(self.to_blit_enemy_lists[x])):
                     if pygame.sprite.collide_rect(i, self.to_blit_enemy_lists[x][y]):
                         self.to_remove.append((i, x, y))
         
         for i, x, y in self.to_remove:
-            self.bullets.remove(i)
+            self.player_bullets.remove(i)
             del self.to_blit_enemy_lists[x][y]
         
         self.animation_progress += 1
@@ -106,30 +138,34 @@ class LevelController:
         for i in self.to_remove:
             del self.to_blit_enemy_lists[i]
         
-        left_row = self.to_blit_enemy_lists[0][0].x
-        right_row = self.to_blit_enemy_lists[-1][0].x
+        if self.to_blit_enemy_lists != []:
+            left_row = self.to_blit_enemy_lists[0][0].x
+            right_row = self.to_blit_enemy_lists[-1][0].x
         
-        if self.going_left:
-            if left_row < 140:
-                for x in range(len(self.to_blit_enemy_lists)):
-                    for y in range(len(self.to_blit_enemy_lists[x])):
-                        self.to_blit_enemy_lists[x][y].y += 75
-                        self.to_blit_enemy_lists[x][y].rect = self.to_blit_enemy_lists[x][y].rect.move(0, 75)
-                self.going_left = False
-        
-        else:
-            if right_row > 1100:
-                for x in range(len(self.to_blit_enemy_lists)):
-                    for y in range(len(self.to_blit_enemy_lists[x])):
-                        self.to_blit_enemy_lists[x][y].y += 75
-                        self.to_blit_enemy_lists[x][y].rect = self.to_blit_enemy_lists[x][y].rect.move(0, 75)
-                self.going_left = True
+            if self.going_left:
+                if left_row < 140:
+                    for x in range(len(self.to_blit_enemy_lists)):
+                        for y in range(len(self.to_blit_enemy_lists[x])):
+                            self.to_blit_enemy_lists[x][y].y += 75
+                            self.to_blit_enemy_lists[x][y].rect = self.to_blit_enemy_lists[x][y].rect.move(0, 75)
+                    self.going_left = False
+            
+            else:
+                if right_row > 1100:
+                    for x in range(len(self.to_blit_enemy_lists)):
+                        for y in range(len(self.to_blit_enemy_lists[x])):
+                            self.to_blit_enemy_lists[x][y].y += 75
+                            self.to_blit_enemy_lists[x][y].rect = self.to_blit_enemy_lists[x][y].rect.move(0, 75)
+                    self.going_left = True
         
         for x in self.to_blit_enemy_lists:
             for y in x:
                 self.screen.blit(y.sprites[self.animation_type], (y.x, y.y))
         
-        for i in self.bullets:
+        for i in self.player_bullets:
+            self.screen.blit(i.sprite, (i.x, i.y))
+        
+        for i in self.enemy_bullets:
             self.screen.blit(i.sprite, (i.x, i.y))
         
         self.screen.blit(self.player.sprite, (self.player.x, self.player.y))
