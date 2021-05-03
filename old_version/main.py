@@ -1,6 +1,4 @@
 import pygame
-import time
-import random
 
 from menus import Menus
 from levels import LevelController
@@ -85,9 +83,11 @@ while game_running:
     if status.startswith('Level'):
         if left_held and not level_control.player.x < 70:
             level_control.player.x -= 10
+            level_control.player.rect = level_control.player.rect.move(-10, 0)
         
         if right_held and not level_control.player.x > 1210:
             level_control.player.x += 10
+            level_control.player.rect = level_control.player.rect.move(10, 0)
         
         if fire_speed < 100:
             fire_speed += 1

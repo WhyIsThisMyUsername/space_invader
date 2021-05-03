@@ -1,5 +1,7 @@
 import pygame
 
+pygame.init()
+
 
 class Player:
     def __init__(self, x, y):
@@ -11,7 +13,7 @@ class Player:
         
         self.sprite = pygame.image.load('images/player.png')
         self.sprite = pygame.transform.scale(self.sprite, (70, 70))
-
+        
         self.rect = pygame.Rect(x, y, 70, 70)
         
         self.x = x

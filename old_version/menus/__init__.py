@@ -1,7 +1,6 @@
 import pygame
-from menu_components import Button
-from menu_components import ResizingText
-from players import Player
+from old_version.menu_components import Button
+from old_version.menu_components import ResizingText
 
 pygame.init()
 
