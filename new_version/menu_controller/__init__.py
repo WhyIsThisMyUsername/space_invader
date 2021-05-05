@@ -12,7 +12,7 @@ TEXT_COLOR_COMBO = (TEXT_COLOR, TEXT_BG_COLOR)
 
 class MenuController:
     def __init__(self, size):
-        self.surface = pygame.Surface(size)
+        self._surface = pygame.Surface(size)
         self._reset_blits()
 
     def main_menu(self):
@@ -33,3 +33,7 @@ class MenuController:
     def _reset_blits(self):
         self._to_blit_buttons = []
         self._to_blit_resizing_text = []
+
+    def return_screen(self):
+        for button in self._to_blit_buttons:
+            self._surface.blit(button.return_text(), *button.return_coords())
