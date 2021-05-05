@@ -6,9 +6,9 @@ pygame.init()
 
 GAME_SIZE = (1280, 960)
 SCREEN = pygame.display.set_mode(GAME_SIZE)
-BG = pygame.transform.scale(pygame.image.load('images/background.jpg'), (1280, 960))
 
 MENU_CONTROLLER = MenuController(GAME_SIZE)
+MENU_STATUSES = ('Main Menu', 'Control Menu', 'Bouncing Button')
 
 clock = pygame.time.Clock()
 game_running = True
@@ -18,4 +18,26 @@ MENU_CONTROLLER.main_menu()
 
 while game_running:
     clock.tick(60)
-    SCREEN.blit(BG, (0, 0))
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            game_running = False
+
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if pygame.mouse.get_pressed(num_buttons=3)[0]:
+                if status == 'Main Menu':
+                    mouse_pos = (*pygame.mouse.get_pos(),)
+                    button_list = MENU_CONTROLLER.return_buttons()
+                    if button_list[0].return_rect().collidepoint(mouse_pos):
+                        print('CLICK START')
+                    elif button_list[1].return_rect().collidepoint(mouse_pos):
+                        status = 'Controls'
+                    elif button_list[2].return_rect().collidepoint(mouse_pos):
+                        status = 'Bouncing Button'
+
+    if status in MENU_STATUSES:
+        SCREEN.blit(MENU_CONTROLLER.return_screen(), (0, 0))
+    elif status.startswith('Level'):
+        pass
+
+    pygame.display.update()

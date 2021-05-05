@@ -4,8 +4,9 @@ pygame.init()
 
 
 class ResizingText:
-    def __init__(self, text, max_x, colors, font):
+    def __init__(self, text, pos, max_x, colors, font):
         self.set_text(text, max_x, colors, font)
+        self._x, self._y = pos
 
     def set_text(self, text, max_x, colors, font):
         text_color, bg_color = colors
@@ -41,3 +42,6 @@ class ResizingText:
 
     def return_text(self):
         return self._new_surface
+
+    def return_pos(self):
+        return self._x, self._y

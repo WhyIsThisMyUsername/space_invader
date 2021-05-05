@@ -42,3 +42,6 @@ class BouncingButton:
     
     def return_rect(self):
         return self._hitbox
+
+    def return_button(self):
+        return self._bg
