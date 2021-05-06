@@ -31,13 +31,24 @@ while game_running:
                     if button_list[0].return_rect().collidepoint(mouse_pos):
                         print('CLICK START')
                     elif button_list[1].return_rect().collidepoint(mouse_pos):
-                        status = 'Controls'
+                        pass
+                        # status = 'Controls'
                     elif button_list[2].return_rect().collidepoint(mouse_pos):
                         status = 'Bouncing Button'
-
+                        MENU_CONTROLLER.bouncing_button_menu()
+                
+                if status == 'Bouncing Button':
+                    mouse_pos = (*pygame.mouse.get_pos(),)
+                    button_list = MENU_CONTROLLER.return_bouncing_buttons()
+                    if button_list[0].return_rect().collidepoint(mouse_pos):
+                        MENU_CONTROLLER.main_menu()
+                        status = 'Main Menu'
+    if status == 'Bouncing Button':
+        MENU_CONTROLLER.bouncing_button_update()
+    
     if status in MENU_STATUSES:
         SCREEN.blit(MENU_CONTROLLER.return_screen(), (0, 0))
     elif status.startswith('Level'):
         pass
-
+    
     pygame.display.update()
