@@ -1,6 +1,6 @@
 import pygame
 
-from menu_controller import MenuController
+from new_version.menu_controller import MenuController
 
 pygame.init()
 
@@ -8,7 +8,7 @@ GAME_SIZE = (1280, 960)
 SCREEN = pygame.display.set_mode(GAME_SIZE)
 
 MENU_CONTROLLER = MenuController(GAME_SIZE)
-MENU_STATUSES = ('Main Menu', 'Control Menu', 'Bouncing Button')
+MENU_STATUSES = ('Main Menu', 'Controls', 'Bouncing Button')
 
 clock = pygame.time.Clock()
 game_running = True
@@ -18,7 +18,8 @@ MENU_CONTROLLER.main_menu()
 
 while game_running:
     clock.tick(60)
-
+    old_status = status
+    
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             game_running = False
@@ -31,18 +32,24 @@ while game_running:
                     if button_list[0].return_rect().collidepoint(mouse_pos):
                         print('CLICK START')
                     elif button_list[1].return_rect().collidepoint(mouse_pos):
-                        pass
-                        # status = 'Controls'
+                        status = 'Controls'
+                        MENU_CONTROLLER.controls_menu()
                     elif button_list[2].return_rect().collidepoint(mouse_pos):
                         status = 'Bouncing Button'
                         MENU_CONTROLLER.bouncing_button_menu()
-                
-                if status == 'Bouncing Button':
+                elif status == 'Controls':
+                    mouse_pos = (*pygame.mouse.get_pos(),)
+                    button_list = MENU_CONTROLLER.return_buttons()
+                    if button_list[0].return_rect().collidepoint(mouse_pos):
+                        MENU_CONTROLLER.main_menu()
+                        status = 'Main Menu'
+                elif status == 'Bouncing Button':
                     mouse_pos = (*pygame.mouse.get_pos(),)
                     button_list = MENU_CONTROLLER.return_bouncing_buttons()
                     if button_list[0].return_rect().collidepoint(mouse_pos):
                         MENU_CONTROLLER.main_menu()
                         status = 'Main Menu'
+    
     if status == 'Bouncing Button':
         MENU_CONTROLLER.bouncing_button_update()
     
@@ -50,5 +57,8 @@ while game_running:
         SCREEN.blit(MENU_CONTROLLER.return_screen(), (0, 0))
     elif status.startswith('Level'):
         pass
+    
+    if status != old_status:
+        print(f'{old_status} --> {status}')
     
     pygame.display.update()

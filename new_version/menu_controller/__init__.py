@@ -54,13 +54,12 @@ class MenuController:
         self._surface.blit(BG, (0, 0))
         
         for button in self._to_blit_buttons:
-            self._surface.blit(button.return_text(), (*button.return_coords(),))
+            self._surface.blit(button.return_text(), button.return_coords())
         
         for resized_text in self._to_blit_resizing_text:
-            self._surface.blit(resized_text.return_text(), *resized_text.return_pos())
+            self._surface.blit(resized_text.return_text(), (*resized_text.return_pos(),))
         
         for bouncing_button in self._to_blit_bouncing_buttons:
             self._surface.blit(bouncing_button.return_button(), (*bouncing_button.return_coordinates(),))
-            print(bouncing_button.return_coordinates())
         
         return self._surface

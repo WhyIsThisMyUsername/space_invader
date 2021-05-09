@@ -28,7 +28,6 @@ class BouncingButton:
             self._direction[1] -= 1
             if self._direction[1] == 0:
                 self._direction[0] = 'down'
-                print(self._current_y)
                 
         elif self._direction[0] == 'down':
             self._current_y += self._direction[1]
@@ -36,7 +35,6 @@ class BouncingButton:
             self._direction[1] += 1
             if self._direction[1] == 31:
                 self._direction[0] = 'up'
-                print(self._current_y)
     
     def return_coordinates(self):
         return self._current_x, self._current_y

@@ -23,13 +23,15 @@ class ResizingText:
             line_x = 0
             surface_y += word_size_y
 
-        self._new_surface = pygame.Surface(max_x, surface_y)
+        self._new_surface = pygame.Surface((max_x, surface_y))
 
         line_x, line_y = 0, 0
         for line in words:
             for word in line:
                 text_surface = font.render(word, True, text_color)
-                background_surface = pygame.Surface(text_surface.get_size()).fill(bg_color)
+                background_surface = pygame.Surface(text_surface.get_size())
+                background_surface.fill(bg_color)
+                print(type(background_surface))
                 background_surface.blit(text_surface, (0, 0))
                 word_width, word_height = background_surface.get_size()
                 if line_x + word_width > max_x:
