@@ -20,3 +20,7 @@ class Bullet:
     def _move_bullet(self):
         self._rect = self._rect.move(0, self._bullet_direction)
         self._bullet_y += self._bullet_direction
+
+    def _invalid_position(self):
+        if not 0 < self._bullet_y < 960:
+            return True

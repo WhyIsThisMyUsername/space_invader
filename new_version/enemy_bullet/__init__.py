@@ -12,4 +12,4 @@ class EnemyBullet(Bullet):
     
     def collision_check(self, player):
         if self._rect.colliderect(player.get_hitbox()):
-            pass
+            return True
