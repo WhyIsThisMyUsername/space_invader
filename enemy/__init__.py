@@ -149,6 +149,7 @@ class Enemy:
     def generate_enemies(level):
         Enemy._enemy_list = []
         Enemy._bullet_list = []
+        Enemy._animation_speed = 30
         if level == 1:
             working_size = (240, DISPLAY_X - 240 - 70)  # 240 gives enough room at the sides for enemies to move,
             # 70 is roughly the size of an enemy

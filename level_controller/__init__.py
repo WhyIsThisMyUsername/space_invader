@@ -48,6 +48,12 @@ class LevelController:
                         to_remove_enemy.append((enemy_list, PLACE_HOLDER_ENEMY.return_enemies()[enemy_list][enemy]))
                         to_remove_player_bullets.append(bullet)
         
+        # Checks if enemy is at the bottom of the screen, ends game if so
+        for enemy_list in range(len(PLACE_HOLDER_ENEMY.return_enemies())):
+            for enemy in range(len(PLACE_HOLDER_ENEMY.return_enemies()[enemy_list])):
+                if PLACE_HOLDER_ENEMY.return_enemies()[enemy_list][enemy].return_pos()[1] > self._display_y - 200:
+                    self._game_status = 'Defeat'
+        
         # Deletes bullets now to prevent bugs from deleting during above loop
         for bullet in to_remove_player_bullets:
             self._player.delete_bullet(bullet)
