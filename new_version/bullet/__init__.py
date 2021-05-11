@@ -2,6 +2,7 @@ import pygame
 
 pygame.init()
 
+
 class Bullet:
     def __init__(self, pos, speed):
         self._bullet_x, self._bullet_y = pos
@@ -20,7 +21,16 @@ class Bullet:
     def _move_bullet(self):
         self._rect = self._rect.move(0, self._bullet_direction)
         self._bullet_y += self._bullet_direction
-
-    def _invalid_position(self):
+    
+    def invalid_position(self):
         if not 0 < self._bullet_y < 960:
             return True
+    
+    def return_rect(self):
+        return self._rect
+    
+    def return_sprite(self):
+        return self._sprite
+    
+    def return_pos(self):
+        return self._bullet_x, self._bullet_y

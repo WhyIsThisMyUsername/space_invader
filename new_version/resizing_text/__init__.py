@@ -7,7 +7,7 @@ class ResizingText:
     def __init__(self, text, pos, max_x, colors, font):
         self.set_text(text, max_x, colors, font)
         self._x, self._y = pos
-
+    
     def set_text(self, text, max_x, colors, font):
         text_color, bg_color = colors
         space = font.size(' ')[0]
@@ -22,9 +22,9 @@ class ResizingText:
                 line_x += word_size_x + space
             line_x = 0
             surface_y += word_size_y
-
+        
         self._new_surface = pygame.Surface((max_x, surface_y))
-
+        
         line_x, line_y = 0, 0
         for line in words:
             for word in line:
@@ -41,9 +41,9 @@ class ResizingText:
                 line_x += word_width + space
             line_x = 0
             line_y += word_height
-
+    
     def return_text(self):
         return self._new_surface
-
+    
     def return_pos(self):
         return self._x, self._y
